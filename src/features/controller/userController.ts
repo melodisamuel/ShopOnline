@@ -10,7 +10,7 @@ class UserController {
 
         // Insert to db
         const newUser: User = await prisma.user.create({
-            data: {
+            data : {
             email, password, firstName, lastName, avatar
             }
         })
