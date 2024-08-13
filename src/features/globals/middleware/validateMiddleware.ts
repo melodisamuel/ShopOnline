@@ -11,7 +11,7 @@ export const validateSchema = (schema: Schema) => {
 
         if (error) {
             const message = formatJoiMessage(error.details)
-            res.status(300).json({error: message});
+            res.status(400).json({error: message});
             return;
         }
 
