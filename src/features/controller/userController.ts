@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prisma }from "~/prisma"
 import { User } from "@prisma/client"
 import { userSchemaCreate } from "../interface/userSchema";
+import { HTTP_STATUS } from "../globals/constants/http";
 
 class UserController {
         public async createUser(req: Request, res: Response) {
@@ -17,7 +18,7 @@ class UserController {
             }
         })
 
-        res.status(201).json(newUser);
+        res.status(HTTP_STATUS.CREATED).json(newUser);
     }
 }
 
