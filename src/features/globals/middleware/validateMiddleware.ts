@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { Schema, ValidationErrorItem } from "joi";
 
 const formatJoiMessage = (joiMessages: ValidationErrorItem[]) => {
-    return joiMessages.map(msgObject => msgObject.message);
+    return joiMessages.map(msgObject => msgObject.message.replace(/['"]/g, ''));
 }
 
 export const validateSchema = (schema: Schema) => {
