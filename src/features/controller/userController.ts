@@ -3,6 +3,7 @@ import { prisma }from "~/prisma"
 import { User } from "@prisma/client"
 import { userSchemaCreate } from "../interface/userSchema";
 import { HTTP_STATUS } from "../globals/constants/http";
+import { StatusCodes } from "http-status-codes";
 
 class UserController {
         public async createUser(req: Request, res: Response) {
@@ -10,6 +11,17 @@ class UserController {
             email, password, firstName, lastName, avatar
         } = req.body;
 
+        const isEmailUnique = true;
+
+        if(isEmailUnique) {
+            throw new Error("Email must be unique");
+        }
+
+        // {
+        //     status: `error`,
+        //     StatusCode: 400,
+        //     message: "Email must be unique"
+        // }
   
         // Insert to db
         const newUser: User = await prisma.user.create({
