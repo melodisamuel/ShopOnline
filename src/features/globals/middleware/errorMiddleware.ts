@@ -2,16 +2,26 @@ import { string } from "joi";
 import { HTTP_STATUS } from "../constants/http";
 
 export abstract class CustomError extends Error {
-    abstract staus: string;
+    abstract status: string;
     abstract statuscode: number;
+    // status: any;
 
     constructor(message: string){
         super(message)
     }
+
+
+    public getErrorResponse() {
+        return {
+            status: this.status,
+            statuscode: this.statuscode,
+            message: this.message,
+            }
+    }
 }
 
 export class BadRequestException extends CustomError {
-    staus: string = "error";
+    status: string = "error";
     statuscode: number = HTTP_STATUS.BAD_REQUEST;
 
     constructor(message: string) {
@@ -20,7 +30,7 @@ export class BadRequestException extends CustomError {
 }
 
 export class unAuthorizedException extends CustomError {
-    staus: string = "error";
+    status: string = "error";
     statuscode: number = HTTP_STATUS.UNAUTHORIZED;
 
     constructor(message: string) {
@@ -29,7 +39,7 @@ export class unAuthorizedException extends CustomError {
 }
 
 export class ForbiddenException extends CustomError {
-    staus: string = "error";
+    status: string = "error";
     statuscode: number = HTTP_STATUS.FORBIDDEN;
 
     constructor(message: string) {
@@ -38,7 +48,7 @@ export class ForbiddenException extends CustomError {
 }
 
 export class NotFoundException extends CustomError {
-    staus: string = "error";
+    status: string = "error";
     statuscode: number = HTTP_STATUS.NOT_FOUND;
 
     constructor(message: string) {
