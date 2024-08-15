@@ -1,5 +1,10 @@
 import express, { Application } from "express";
 import Server from "./server"
+import dotenv from 'dotenv';
+dotenv.config();
+
+// Rest of your imports and code
+
 
 class ShopApplication {
     public run(): void {

@@ -1,7 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import  "dotenv/config"
-import appRoutes from "./features/globals/routes/appRoutes";
-import { CustomError } from "./features/globals/middleware/errorMiddleware";
+import appRoutes from "./features/user/routes/appRoutes";
+import { CustomError, NotFoundException } from "./features/globals/middleware/errorMiddleware";
 
 class Server {
     private app: Application;
@@ -23,14 +23,14 @@ class Server {
     private setupRoutes(): void {
         appRoutes(this.app);
     } // 404, common error 
+    
     private setupGlobalError(): void {
         this.app.all('*', (req, res, next) => {
-           return res.status(404).json({message: `The URL ${req.originalUrl} not found`});
-
+            return next(new NotFoundException(`The URL ${req.originalUrl} not found`))
 })
 
         // Global 
-        this.app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => {{
+        this.app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => { {
                return  res.status(error.statuscode).json(error.getErrorResponse());
             }
             next()

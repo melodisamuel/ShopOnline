@@ -55,3 +55,12 @@ export class NotFoundException extends CustomError {
         super(message)
     }
 }
+
+export class InternalExecption extends CustomError {
+    status: string = "error";
+    statuscode: number = HTTP_STATUS.INTERNAL_SERVER_ERROR;
+
+    constructor(message: string) {
+        super(message)
+    }
+}
