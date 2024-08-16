@@ -20,6 +20,10 @@ import { BadRequestException } from "~/features/globals/middleware/errorMiddlewa
             accessToken
         });
     }
+
+    public async loginUser(req: Request, res: Response, next: NextFunction) {
+        
+    }
  }
 
 export const authController: AuthController = new AuthController();
