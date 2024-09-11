@@ -22,7 +22,12 @@ import { BadRequestException } from "~/features/globals/middleware/errorMiddlewa
     }
 
     public async loginUser(req: Request, res: Response, next: NextFunction) {
-        
+       const accessToken = await authService.login(req.body);
+
+        res.status(HTTP_STATUS.CREATED).json({
+            message: 'User login succesful!',
+            accessToken,
+        });
     }
  }
 

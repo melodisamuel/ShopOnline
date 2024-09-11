@@ -3,7 +3,8 @@ import { validateSchema } from '~/features/globals/middleware/validateMiddleware
 import { userSchemaCreate } from '~/features/interface/userSchema';
 import { authController } from "../controller/authController";
 
-const userRoute = express.Router();
-userRoute.post('/register', validateSchema(userSchemaCreate),(authController.registerUser));
+const authRoute = express.Router();
+authRoute.post('/register', validateSchema(userSchemaCreate),(authController.registerUser));
+authRoute.post('/login',(authController.loginUser));
 
-export default userRoute;
+export default authRoute;  

@@ -26,6 +26,10 @@ class UserController {
     next (new InternalExecption(error.message))
  }
     }
+
+    public async getMe(req: Request, res: Response, next: NextFunction) {
+         
+    }
 }
 
 
