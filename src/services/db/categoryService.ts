@@ -1,4 +1,5 @@
 import { Category } from "@prisma/client";
+import { NotFoundException } from "~/features/globals/middleware/errorMiddleware";
 import { prisma } from "~/prisma";
 
 class CategoryService {
@@ -13,6 +14,31 @@ class CategoryService {
        })
 
     return category;
+    }
+
+    public async read(): Promise<Category[]> {
+        const categories: Category[] = await prisma.category.findMany({
+            where: {
+                status: true,
+            }
+        });
+
+        return categories;
+    }
+
+    public async readOne(id: number): Promise<Category> {
+        const category = await prisma.category.findFirst({
+            where: {
+                id,
+                status: true,
+            }
+        })
+
+        if (!category) {
+            throw new NotFoundException(`Category with ID: ${id} not found`);
+        }
+
+        return category;
     }
 
 }
