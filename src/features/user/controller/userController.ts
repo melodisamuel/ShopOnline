@@ -28,6 +28,7 @@ class UserController {
     }
 
     public async getMe(req: Request, res: Response, next: NextFunction) {
+        return res.status(HTTP_STATUS.OK).json(req.currentUser)
          
     }
 }
