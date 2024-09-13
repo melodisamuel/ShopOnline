@@ -41,6 +41,43 @@ class CategoryService {
         return category;
     }
 
+    public async edit(id: number, requestBody: any) { 
+        const { name, icon } = requestBody;
+
+        if (await this.getCountCategory(id) <= 0) {
+            throw new NotFoundException(`Category with ID ${id} not found`)
+        }
+
+        const updatedCategory = await prisma.category.update({
+            where: {
+                id, 
+                status: true,
+            },
+            data: {
+                name, icon
+            }
+        })
+
+        if(!updatedCategory) {
+
+         throw new NotFoundException(`Category with ID: ${id} not found`);
+
+        }
+
+        return updatedCategory;
+    }
+
+   
+
+    private async getCountCategory(id: number): Promise<number> {
+        const count = await prisma.category.count({
+            where: {
+                id
+            }
+        })
+
+        return count;
+    }
 }
 
 export const categoryService: CategoryService = new CategoryService();
