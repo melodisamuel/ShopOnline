@@ -43,11 +43,24 @@ class CategoryController {
         try {
             const category = await categoryService.edit(parseInt(req.params.id), req.body);
             return res.status(HTTP_STATUS.OK).json({
-                message: 'Update category',
+                message: 'Category updated',
                 data: category,
             });
         } catch (error) {
             next(error); // Forward the error to the error-handling middleware
+        }
+    }
+
+    public async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const category = await categoryService.remove(parseInt(req.params.id));
+            return res.status(HTTP_STATUS.OK).json({
+                message: 'Category deleted!',
+                data: category,
+            }); 
+            
+        } catch (error) {
+            
         }
     }
 }

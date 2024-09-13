@@ -1,9 +1,10 @@
 import { Category } from "@prisma/client";
 import { NotFoundException } from "~/features/globals/middleware/errorMiddleware";
+import { ICategoryBody } from "~/features/interface/categoryInterface";
 import { prisma } from "~/prisma";
 
 class CategoryService {
-    public async add(requestBody: any): Promise<Category> {
+    public async add(requestBody: ICategoryBody): Promise<Category> {
         const { name, icon  } = requestBody;
 
 
@@ -41,7 +42,7 @@ class CategoryService {
         return category;
     }
 
-    public async edit(id: number, requestBody: any) { 
+    public async edit(id: number, requestBody: ICategoryBody) { 
         const { name, icon } = requestBody;
 
         if (await this.getCountCategory(id) <= 0) {
@@ -67,12 +68,27 @@ class CategoryService {
         return updatedCategory;
     }
 
+    public async remove(id: number) {
+
+        if (await this.getCountCategory(id) <= 0) {
+            throw new NotFoundException(`Category with ID ${id} not found`)
+        }
+
+        const category = await prisma.category.delete({
+            where: {
+                id,
+            }
+        })
+        
+    }
+
    
 
     private async getCountCategory(id: number): Promise<number> {
         const count = await prisma.category.count({
             where: {
-                id
+                id,
+                status: true,
             }
         })
 
