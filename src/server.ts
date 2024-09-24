@@ -1,6 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import  "dotenv/config"
-import appRoutes from "./features/user/routes/appRoutes";
+import appRoutes from "./features/globals/routes/appRoutes";
 import { CustomError, NotFoundException } from "./features/globals/middleware/errorMiddleware";
 
 class Server {

@@ -1,7 +1,7 @@
 import { User } from "@prisma/client"
 import { prisma } from "~/prisma";
 import { NextFunction, Request, Response } from "express";
-import { authService } from "~/services/authService";
+import { authService } from "~/services/auth.service";
 import { HTTP_STATUS } from "~/features/globals/constants/http";
 import { BadRequestException } from "~/features/globals/middleware/errorMiddleware";
 
