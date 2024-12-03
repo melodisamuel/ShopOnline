@@ -44,7 +44,7 @@ model Product {
    name String
    longDescription String @db.LongText
    shortDescription String
-   qunatity Int
+   quantity Int
    main_image String
    category Category @relation(fields: [categoryId], references: [id])
    categoryId Int

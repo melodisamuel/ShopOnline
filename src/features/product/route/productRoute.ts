@@ -6,7 +6,8 @@ import { validateSchema } from "~/features/globals/middleware/validateMiddleware
 
 const productRoute = express.Router();
 
-productRoute.post('/');
+productRoute.post('/', productController.create);
+productRoute.get('/', productController.read);
 
 
 export default productRoute;
