@@ -26,17 +26,25 @@ class Server {
     
     private setupGlobalError(): void {
         this.app.all('*', (req, res, next) => {
-            return next(new NotFoundException(`The URL ${req.originalUrl} not found`))
-})
-
-        // Global 
-        this.app.use((error: CustomError, req: Request, res: Response, next: NextFunction) => { {
-               return  res.status(error.statuscode).json(error.getErrorResponse());
+            return next(new NotFoundException(`The URL ${req.originalUrl} not found`));
+        });
+    
+        this.app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+            // console.error('check error: ', error);
+    
+            if (error instanceof CustomError) {
+                return res.status(error.statuscode).json(error.getErrorResponse());
             }
-            next()
-          })
-
+    
+            // Default fallback for other errors
+            return res.status(500).json({
+                status: "error",
+                statuscode: 500,
+                message: "Internal Server Error",
+            });
+        });
     }
+    
 
     private startServer() {
         const port = parseInt(process.env.PORT!) || 5050;
