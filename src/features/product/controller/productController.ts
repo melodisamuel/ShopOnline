@@ -51,6 +51,19 @@ class ProductController {
             next(error); 
         }
     }
+
+    public async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            const product = await productService.remove(parseInt(req.params.id));
+
+            return res.status(HTTP_STATUS.OK).json({
+                message: 'Delete product',
+                data: product,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export const productController: ProductController = new ProductController();

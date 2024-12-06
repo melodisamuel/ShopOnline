@@ -10,6 +10,7 @@ productRoute.post('/', productController.create);
 productRoute.get('/', productController.read);
 productRoute.get('/:id', productController.readOne);
 productRoute.put('/:id', productController.update);
+productRoute.delete('/:id', productController.delete);
 
 
 export default productRoute;
