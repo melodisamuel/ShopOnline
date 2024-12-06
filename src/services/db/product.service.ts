@@ -1,9 +1,10 @@
 import { Product } from '@prisma/client'
 import { NotFoundException } from '~/features/globals/middleware/errorMiddleware'
+import { IProductBody } from '~/features/product/interface/productInterface'
 import { prisma } from '~/prisma'
 
 class ProductService {
-  public async add(requestBody: any): Promise<Product> {
+  public async add(requestBody: IProductBody): Promise<Product> {
     const { name, longDescription, shortDescription, quantity, main_image, categoryId } = requestBody
 
     const product: Product = await prisma.product.create({
@@ -39,7 +40,7 @@ class ProductService {
     return product
   }
 
-  public async edit(id: number, requestBody: any): Promise<Product> {
+  public async edit(id: number, requestBody: IProductBody): Promise<Product> {
     const { name, longDescription, shortDescription, quantity, main_image, categoryId } = requestBody
 
     if ((await this.getProductCount(id)) === 0) {
@@ -74,7 +75,7 @@ class ProductService {
     if ((await this.getProductCount(id)) === 0) {
         throw new NotFoundException(`Product with ID: ${id} not found`)
       }
-      
+
     await prisma.product.delete({
       where: { id }
     })
