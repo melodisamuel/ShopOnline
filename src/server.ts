@@ -2,6 +2,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import  "dotenv/config"
 import appRoutes from "./features/globals/routes/appRoutes";
 import { CustomError, NotFoundException } from "./features/globals/middleware/errorMiddleware";
+import { error } from "console";
 
 class Server {
     private app: Application;
@@ -28,9 +29,10 @@ class Server {
         this.app.all('*', (req, res, next) => {
             return next(new NotFoundException(`The URL ${req.originalUrl} not found`));
         });
-    
         this.app.use((error: any, req: Request, res: Response, next: NextFunction) => {
-            // console.error('check error: ', error);
+            console.error('Error Message:', error.message);
+            console.error('Error Stack:', error.stack);
+          
     
             if (error instanceof CustomError) {
                 return res.status(error.statuscode).json(error.getErrorResponse());
